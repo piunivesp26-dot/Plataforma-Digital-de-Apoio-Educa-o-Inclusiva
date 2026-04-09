@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Plataforma de Educação Inclusiva</title>
+
+<style>
+
+body{
+font-family: Arial;
+margin:0;
+background:#f4f6f8;
+}
+
+header{
+background:#2c7be5;
+color:white;
+text-align:center;
+padding:20px;
+}
+
+nav{
+background:#1b4f9c;
+padding:10px;
+text-align:center;
+}
+
+nav a{
+color:white;
+margin:15px;
+text-decoration:none;
+font-weight:bold;
+cursor:pointer;
+}
+
+section{
+padding:30px;
+display:none;
+}
+
+img{
+width:400px;
+border-radius:10px;
+margin-top:20px;
+}
+
+button{
+padding:10px 20px;
+background:#2c7be5;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+input{
+padding:8px;
+width:200px;
+}
+
+.card{
+background:white;
+padding:20px;
+margin:10px;
+border-radius:10px;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>Plataforma Digital de Apoio à Educação Inclusiva</h1>
+<p>Materiais adaptados para alunos com necessidades educacionais especiais</p>
+</header>
+
+<nav>
+<a onclick="mostrar('inicio')">Início</a>
+<a onclick="mostrar('login')">Login</a>
+<a onclick="mostrar('materiais')">Materiais</a>
+</nav>
+
+<!-- INICIO -->
+
+<section id="inicio" style="display:block">
+
+<h2>Sobre o Projeto</h2>
+
+<img src="https://images.unsplash.com/photo-1588072432836-e10032774350">
+
+<p>
+Este projeto tem como objetivo desenvolver uma plataforma digital
+para apoiar professores na busca de materiais adaptados para alunos
+com necessidades educacionais especiais (NEE).
+</p>
+
+<p>
+A plataforma organiza conteúdos educacionais em um repositório
+acessível, permitindo que educadores encontrem rapidamente
+recursos que promovam a inclusão e a equidade no aprendizado.
+</p>
+
+</section>
+
+<!-- LOGIN -->
+
+<section id="login">
+
+<h2>Login do Professor</h2>
+
+<input type="text" id="usuario" placeholder="Usuário">
+<br><br>
+
+<input type="password" id="senha" placeholder="Senha">
+<br><br>
+
+<button onclick="login()">Entrar</button>
+
+<p id="mensagem"></p>
+
+</section>
+
+<!-- MATERIAIS -->
+
+<section id="materiais">
+
+<h2>Repositório de Materiais Adaptados</h2>
+
+<div id="listaMateriais"></div>
+
+</section>
+
+<script>
+
+function mostrar(pagina){
+
+document.querySelectorAll("section").forEach(sec=>{
+sec.style.display="none"
+})
+
+document.getElementById(pagina).style.display="block"
+
+}
+
+function login(){
+
+let usuario = document.getElementById("usuario").value
+let senha = document.getElementById("senha").value
+
+if(usuario=="professor" && senha=="1234"){
+
+mostrar("materiais")
+carregarMateriais()
+
+}else{
+
+document.getElementById("mensagem").innerHTML="Usuário ou senha incorretos"
+
+}
+
+}
+
+let bancoMateriais = [
+
+{
+titulo:"Atividade Adaptada de Matemática",
+categoria:"Matemática Inclusiva"
+},
+
+{
+titulo:"Cartilha Visual de Alfabetização",
+categoria:"Alfabetização"
+},
+
+{
+titulo:"Jogo Pedagógico para TEA",
+categoria:"Educação Inclusiva"
+},
+
+{
+titulo:"Atividades para Desenvolvimento Cognitivo",
+categoria:"Estimulação"
+}
+
+]
+
+function carregarMateriais(){
+
+let lista = document.getElementById("listaMateriais")
+
+lista.innerHTML=""
+
+bancoMateriais.forEach(mat=>{
+
+lista.innerHTML += `
+<div class="card">
+<h3>${mat.titulo}</h3>
+<p>Categoria: ${mat.categoria}</p>
+</div>
+`
+
+})
+
+}
+
+</script>
+
+</body>
+</html>
