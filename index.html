@@ -1,211 +1,94 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Plataforma de Educação Inclusiva</title>
-
-<style>
-
-body{
-font-family: Arial;
-margin:0;
-background:#f4f6f8;
-}
-
-header{
-background:#2c7be5;
-color:white;
-text-align:center;
-padding:20px;
-}
-
-nav{
-background:#1b4f9c;
-padding:10px;
-text-align:center;
-}
-
-nav a{
-color:white;
-margin:15px;
-text-decoration:none;
-font-weight:bold;
-cursor:pointer;
-}
-
-section{
-padding:30px;
-display:none;
-}
-
-img{
-width:400px;
-border-radius:10px;
-margin-top:20px;
-}
-
-button{
-padding:10px 20px;
-background:#2c7be5;
-color:white;
-border:none;
-border-radius:5px;
-cursor:pointer;
-}
-
-input{
-padding:8px;
-width:200px;
-}
-
-.card{
-background:white;
-padding:20px;
-margin:10px;
-border-radius:10px;
-box-shadow:0 2px 5px rgba(0,0,0,0.1);
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <title>Plataforma de Educação Inclusiva</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background: #f4f6f8; }
+        header { background: #2c7be5; color: white; text-align: center; padding: 20px; }
+        nav { background: #1b4f9c; padding: 10px; text-align: center; }
+        nav a { color: white; margin: 15px; text-decoration: none; font-weight: bold; cursor: pointer; }
+        section { padding: 30px; display: none; }
+        .card { background: white; padding: 20px; margin: 10px 0; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        button { padding: 10px 20px; background: #2c7be5; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        input { padding: 8px; margin: 5px 0; width: 200px; }
+    </style>
 </head>
-
 <body>
 
 <header>
-<h1>Plataforma Digital de Apoio à Educação Inclusiva</h1>
-<p>Materiais adaptados para alunos com necessidades educacionais especiais</p>
+    <h1>Plataforma Digital de Apoio à Educação Inclusiva</h1>
+    <p>Materiais adaptados para alunos com necessidades especiais</p>
 </header>
 
+
 <nav>
-<a onclick="mostrar('inicio')">Início</a>
-<a onclick="mostrar('login')">Login</a>
-<a onclick="mostrar('materiais')">Materiais</a>
+    <a onclick="mostrar('inicio')">Início</a>
+    <a onclick="mostrar('login')">Login</a>
+    <a onclick="mostrar('materiais')">Materiais</a>
 </nav>
 
-<!-- INICIO -->
-
 <section id="inicio" style="display:block">
+    <h2>Sobre o Projeto</h2>
 
-<h2>Sobre o Projeto</h2>
-
-<img src="https://images.unsplash.com/photo-1588072432836-e10032774350">
-
-<p>
-Este projeto tem como objetivo desenvolver uma plataforma digital
-para apoiar professores na busca de materiais adaptados para alunos
-com necessidades educacionais especiais (NEE).
-</p>
-
-<p>
-A plataforma organiza conteúdos educacionais em um repositório
-acessível, permitindo que educadores encontrem rapidamente
-recursos que promovam a inclusão e a equidade no aprendizado.
-</p>
-
+    <p>Bem-vindo! Esta plataforma ajuda professores a encontrar materiais adaptados.</p>
 </section>
-
-<!-- LOGIN -->
 
 <section id="login">
-
-<h2>Login do Professor</h2>
-
-<input type="text" id="usuario" placeholder="Usuário">
-<br><br>
-
-<input type="password" id="senha" placeholder="Senha">
-<br><br>
-
-<button onclick="login()">Entrar</button>
-
-<p id="mensagem"></p>
-
+    <h2>Login do Professor</h2>
+    <input type="text" id="usuario" placeholder="Usuário"><br>
+    <input type="password" id="senha" placeholder="Senha"><br>
+    <button onclick="login()">Entrar</button>
+    <p id="mensagem" style="color: red;"></p>
 </section>
-
-<!-- MATERIAIS -->
 
 <section id="materiais">
-
-<h2>Repositório de Materiais Adaptados</h2>
-
-<div id="listaMateriais"></div>
-
+    <h2>Repositório de Materiais</h2>
+    <div id="listaMateriais"></div>
 </section>
 
-<script>
 
-function mostrar(pagina){
+<script type="module">
+    // 1. O Import conecta o seu arquivo de dados teste.js 📂
+    import { bancoMateriais } from './teste.js';
 
-document.querySelectorAll("section").forEach(sec=>{
-sec.style.display="none"
-})
+    // 2. Tornamos as funções globais para o HTML 'enxergar' 🔗
+    window.mostrar = (idSeçao) => {
+        document.querySelectorAll('section').forEach(s => s.style.display = 'none');
+        const alvo = document.getElementById(idSeçao);
+        if (alvo) alvo.style.display = 'block';
+    };
 
-document.getElementById(pagina).style.display="block"
+    window.login = () => {
+        const u = document.getElementById('usuario').value;
+        const s = document.getElementById('senha').value;
 
-}
+        if (u === "professor" && s === "1234") {
+            window.mostrar('materiais');
+            renderizarMateriais();
+        } else {
+            document.getElementById('mensagem').innerText = "Usuário ou senha incorretos.";
+        }
+    };
 
-function login(){
+    // 3. Função que usa os dados importados do teste.js
+    function renderizarMateriais() {
+        const container = document.getElementById('listaMateriais');
+        container.innerHTML = ""; 
 
-let usuario = document.getElementById("usuario").value
-let senha = document.getElementById("senha").value
-
-if(usuario=="professor" && senha=="1234"){
-
-mostrar("materiais")
-carregarMateriais()
-
-}else{
-
-document.getElementById("mensagem").innerHTML="Usuário ou senha incorretos"
-
-}
-
-}
-
-let bancoMateriais = [
-
-{
-titulo:"Atividade Adaptada de Matemática",
-categoria:"Matemática Inclusiva"
-},
-
-{
-titulo:"Cartilha Visual de Alfabetização",
-categoria:"Alfabetização"
-},
-
-{
-titulo:"Jogo Pedagógico para TEA",
-categoria:"Educação Inclusiva"
-},
-
-{
-titulo:"Atividades para Desenvolvimento Cognitivo",
-categoria:"Estimulação"
-}
-
-]
-
-function carregarMateriais(){
-
-let lista = document.getElementById("listaMateriais")
-
-lista.innerHTML=""
-
-bancoMateriais.forEach(mat=>{
-
-lista.innerHTML += `
-<div class="card">
-<h3>${mat.titulo}</h3>
-<p>Categoria: ${mat.categoria}</p>
-</div>
-`
-
-})
-
-}
-
+        bancoMateriais.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.innerHTML = `
+                <h3>${item.titulo}</h3>
+                <p><strong>Categoria:</strong> ${item.categoria}</p>
+                <a href="${item.arquivo}" target="_blank">
+                    <button>Abrir Material</button>
+                </a>
+            `;
+            container.appendChild(div);
+        });
+    }
 </script>
 
 </body>
